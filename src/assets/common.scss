@@ -1,0 +1,217 @@
+@use "sass:map";
+
+// base, bootstrap-like global stylings for consistency and simplification
+
+:root {
+  --standard-font-size: 1rem;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  line-height: 2;
+  background: darkslateblue;
+  font-size: var(--standard-font-size); /*  16px */
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  height: auto;
+}
+
+button {
+  border: none;
+  background-color: inherit;
+  color: inherit;
+  margin: 4px;
+  padding: 4px;
+  line-height: 2;
+  font-size: 1em; /*  16px */
+  cursor: pointer;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+}
+
+// bootstrap-esque styling shortcuts
+
+.weight-bold {
+  font-weight: bold;
+}
+.weight-bolder {
+  font-weight: bolder;
+}
+.weight-boldest {
+  /* /* line-height: 3; this is needed to account for the additional space the text takes */
+  font-weight: 900;
+}
+
+.text-start {
+  text-align: start;
+}
+.text-center {
+  text-align: center;
+}
+.text-end {
+  text-align: end;
+}
+
+.relative {
+  position: relative;
+}
+
+.flex {
+  display:flex;
+  position: relative;
+
+  &.row {
+    flex-direction: row;
+  }
+  &.col {
+    flex-direction: column;
+  }
+  &.a-center {
+    align-items: center;
+  }
+  &.a-start {
+    align-items: flex-start;
+  }
+  &.a-end {
+    align-items: flex-end;
+  }
+  &.a-even {
+    align-content: space-evenly;
+  }
+  &.a-around {
+    align-content: space-around;
+  }
+  &.a-between {
+    align-content: space-between;
+  }
+  &.j-center {
+    justify-content: center;
+  }
+  &.j-start {
+    justify-content: flex-start;
+  }
+  &.j-end {
+    justify-content: flex-end;
+  }
+  &.j-even {
+    justify-content: space-evenly;
+  }
+  &.j-around {
+    justify-content: space-around;
+  }
+  &.j-between {
+    justify-content: space-between;
+  }
+}
+
+// height/width shortcut maker
+$incrementStep: 5;
+
+@for $current from 0 through calc(100/$incrementStep) {
+  .h-#{$current * $incrementStep} {
+    height: #{$current * $incrementStep + "%"} !important;
+  }
+  .w-#{$current * $incrementStep} {
+    width: #{$current * $incrementStep + "%"} !important;
+  }
+}
+
+.h-fit {
+  height: fit-content;
+}
+.w-fit {
+  width: fit-content;
+}
+
+// padding/margin shortcut maker
+$sizeIncrement: 4;
+$maxIncrement: 6; // 0-based
+$identifiers: (
+  all: "a",
+  x: "x",
+  y: "y",
+  top: "t",
+  bottom: "b",
+  left: "l",
+  right: "r"
+); // could also do RTL ver, e.g. "start" and "end", if needed
+
+@for $current from 0 through $maxIncrement {
+  @each $name, $abrv in $identifiers {
+    @if $name == all {
+      .p#{$abrv}-#{$current} {
+        padding: #{$current * $sizeIncrement}px !important;
+      }
+      .m#{$abrv}-#{$current} {
+        margin: #{$current * $sizeIncrement}px !important;
+      }
+    }
+    @else if $name == x {
+      .p#{$abrv}-#{$current} {
+        padding-left: #{$current * $sizeIncrement}px !important;
+        padding-right: #{$current * $sizeIncrement}px !important;
+      }
+      .m#{$abrv}-#{$current} {
+        margin-left: #{$current * $sizeIncrement}px !important;
+        margin-right: #{$current * $sizeIncrement}px !important;
+      }
+    }
+    @else if $name == y {
+      .p#{$abrv}-#{$current} {
+        padding-top: #{$current * $sizeIncrement}px !important;
+        padding-bottom: #{$current * $sizeIncrement}px !important;
+      }
+      .m#{$abrv}-#{$current} {
+        margin-top: #{$current * $sizeIncrement}px !important;
+        margin-bottom: #{$current * $sizeIncrement}px !important;
+      }
+    }
+    @else {
+      .p#{$abrv}-#{$current} {
+        padding-#{$name}: #{$current * $sizeIncrement}px !important;
+      }
+      .m#{$abrv}-#{$current} {
+        margin-#{$name}: #{$current * $sizeIncrement}px !important;
+      }
+    }
+  }
+}
